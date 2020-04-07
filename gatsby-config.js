@@ -10,6 +10,7 @@ module.exports = {
     siteTitleAlt: `Chandan Kumar`,
   },
   plugins: [
+    `gatsby-plugin-netlify-cms`,
     {
       resolve: `@lekoarts/gatsby-theme-minimal-blog`,
       options: {
