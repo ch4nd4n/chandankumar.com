@@ -13,6 +13,14 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-netlify-cms`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/images`,
+      },
+    },
     {
       resolve: `@lekoarts/gatsby-theme-minimal-blog`,
       options: {
@@ -50,7 +58,7 @@ module.exports = {
       options: {
         name: `chandan kumar`,
         short_name: `chandan-kumar`,
-        description: `Software engineer at Liftoff`,
+        description: `Chandan Kumar Software engineer in Bangalore.`,
         start_url: `/`,
         background_color: `#fff`,
         theme_color: `#6B46C1`,
