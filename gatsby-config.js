@@ -4,9 +4,11 @@ require(`dotenv`).config({
 
 module.exports = {
   siteMetadata: {
+    author: '@ch4nd4n',
     siteTitle: `Chandan Kumar`,
-      siteHeadline: `Chandan Kumar - Homepage of ramblings`,
-      siteUrl: `https://www.chandankumar.com`,
+    siteHeadline: `Chandan Kumar - Homepage of ramblings`,
+    siteUrl: `https://www.chandankumar.com`,
+    siteDescription: 'chandankumar.com is space for random ramblings, technical articles by a random engineer',
     siteTitleAlt: `Chandan Kumar`,
   },
   plugins: [
