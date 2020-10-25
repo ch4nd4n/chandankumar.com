@@ -6,6 +6,16 @@ media_folder: static/img
 public_folder: /img
 
 collections:
+  - name: "tutorials"
+    label: "Tutorials"
+    folder: "content/tutorials"
+    create: true
+    editor:
+      preview: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
   - name: "articles"
     label: "Articles"
     folder: "content/posts"
