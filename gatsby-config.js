@@ -6,9 +6,11 @@ module.exports = {
   siteMetadata: {
     author: '@ch4nd4n',
     siteTitle: `Chandan Kumar`,
-    siteHeadline: `Chandan Kumar - Homepage of ramblings`,
+    siteHeadline: `Chandan Kumar - Pointers to ramblings`,
+    siteLanguage: 'en',
+    siteImage: 'ck_4x.png',
     siteUrl: `https://www.chandankumar.com`,
-    siteDescription: 'chandankumar.com is space for random ramblings, technical articles by a random engineer',
+    siteDescription: 'chandankumar.com is space for Chandan Kumar to ramble about random things and some technical articles by just another Software "Engineer" in Bangalore.',
     siteTitleAlt: `Chandan Kumar`,
   },
   plugins: [
