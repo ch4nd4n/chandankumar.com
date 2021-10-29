@@ -1,14 +1,15 @@
 ---
-title: 'Resolved: Issue with Microsoft Azure Functions connecting to CosmosDB'
+title: 'Issue with Microsoft Azure Functions connecting to CosmosDB'
 slug: /article/azure-cosmos-outputdocument-binding-issue
-date: 2021-10-17T10:32:11.829Z
-description: 'Resolved: Issue with Microsoft Azure Functions connecting to CosmosDB'
+date: 2021-10-30T01:00:00Z
+description: 'Issue with Microsoft Azure Functions connecting to CosmosDB'
 tags:
   - JavaScript
   - Azure
 ---
 
-This one a pesky annoying issue that ate up a lot of my time. The solution was just deletion of couple of lines.
+This one was a pesky annoying issue that ate up a lot of my time. The solution was just deletion of a line.
+I couldn't find the exact issue on stackoverflow, but there were some hints. Like generated JSON has issues.
 
 While following Azure Documentation on connecting Azure function with Cosmos DB, I ran into following error.
 
@@ -38,5 +39,3 @@ So the final node looked something like
 ```
 
 Azure should update the code generation logic or the document https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-output?tabs=javascript
-
-I couldn't find anything useful on stackoverflow.
