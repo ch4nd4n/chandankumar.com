@@ -1,0 +1,42 @@
+---
+title: 'Resolved: Issue with Microsoft Azure Functions connecting to CosmosDB'
+slug: /article/azure-cosmos-outputdocument-binding-issue
+date: 2021-10-17T10:32:11.829Z
+description: 'Resolved: Issue with Microsoft Azure Functions connecting to CosmosDB'
+tags:
+  - JavaScript
+  - Azure
+---
+
+This one a pesky annoying issue that ate up a lot of my time. The solution was just deletion of couple of lines.
+
+While following Azure Documentation on connecting Azure function with Cosmos DB, I ran into following error.
+
+```log
+[2021-10-29T19:05:02.795Z] The 'HttpTrigger1' function is in error: Unable to configure binding 'outputDocument' of type 'cosmosDB'. This may indicate invalid function.json properties. Input string was not in a correct format.
+```
+
+The issue was with generated `function.json` file, I had to snip out the following to get it working
+
+```json
+    "collectionThroughput": ""
+```
+
+So the final node looked something like
+
+```json
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "outputDocument",
+      "databaseName": "my-database",
+      "collectionName": "my-container",
+      "createIfNotExists": false,
+      "connectionStringSetting": "CosmosDbConnectionString",
+      "partitionKey": "{id}"
+    }
+```
+
+Azure should update the code generation logic or the document https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-output?tabs=javascript
+
+I couldn't find anything useful on stackoverflow.
