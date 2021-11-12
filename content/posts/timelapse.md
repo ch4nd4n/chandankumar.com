@@ -7,7 +7,7 @@ tag:
 ---
 Livingstone Daisy Timelapse using Nikon D5000 over a period of few hours.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Yst4UvUhpxo" frameborder="0" allow="accelerometer; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="400px" src="https://www.youtube.com/embed/Yst4UvUhpxo" frameborder="0" allow="accelerometer; picture-in-picture" allowfullscreen></iframe>
 
 This Timelapse comprises of little over 700 frames at 4k pixels.
 
