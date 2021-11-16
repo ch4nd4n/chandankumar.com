@@ -1,11 +1,29 @@
 ---
-title: 'Review: fly.io on Apple M1 '
+title: 'fly.io on Apple M1 deployment'
 slug: /article/apple-m1-fly-docker-issue
 date: 2021-10-17T10:32:11.829Z
-description: 'I ran in to fly.io issue when trying to build and deploy on an Apple M1'
+description: 'Building docker image on Apple Mac M1 and deploying to fly.io runs into architecture issue'
+tags:
+  - docker
 ---
 
 # Summary
+Building and deploying docker container image from Apple Mac M1 runs into error.
+
+```
+Error Validation failed: Image must be amd64 architecture for linux us
+```
+
+fly.io runs on AMD architecture. Mac M1 is ARM. I initially resolved it by using Github action to build the container, but in case you
+want to build it on your M1 and put it up in container registry, you could use `buildx`, following 3 commands did the trick for me.
+
+```sh
+docker buildx create --name mybuilder
+docker buildx use mybuilder
+docker buildx build --platform linux/amd64 -t ch4nd4n/homechef-menu:amd -f Dockerfile.menu --push .
+```
+
+### Older post below
 
 While starting off with fly.io, the first tutorial worked fine, but I ran into issue when I tried the Node.js example given on the website. 
 fly.io is a platform that let's you deploy your web applications(something like that). I believe it has to do something with Apple M1 chip.
