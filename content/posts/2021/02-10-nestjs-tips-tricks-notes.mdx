@@ -1,24 +1,52 @@
 ---
 title: "Random Notes on NestJs"
-slug: "/blog/2017/10/02/welcome-to-jekyll/"
+slug: "/blog/nestjs-best-practices"
 date:   2021-10-02
 tags: 
-    - javascript
-    - best-practices
-    - web
+    - node.js
+    - programming
 ---
 
 Notes on NestJs best practices.
 
-## NestJs
+> NestJS is a framework for developing server-side applications.
 
-Using `npx` instead of `nest new APP_NAME`
+### 1. Using `npx` instead of `nest new APP_NAME`
 
-```
+```bash
 npx @nestjs/cli new APP_NAME
 ```
 
 Source: https://github.com/nestjs/nest-cli/issues/572
 
-For some strange(good) reason I don't like installing npm globally.
+This isn't particulary true just for nestjs but I avoid installing npm globally.
+
+### 2. Use Nest CLI code generator
+
+
+```bash
+npx nest g module music
+```
+
+
+This allows you to structure your application in terms of specific functionality. Be wary of creating too many without giving a thought, while modules can be shared, too many cyclic dependencies leads to warping your head around confusing code. If you end up importing a particular module or modules in a lot of space, you may want to consider restructuring it in global scope.
+
+### 3. Avoid creating too many custom Exceptions
+
+While it might be very tempting to create custom errors, it does not add too much value over a period of time. In the end your APIs are going to return some sort of error code with may be some JSON. You could live with Standard Exceptions in the framework.
+
+```javascript
+throw new HttpException({
+    status: HttpStatus.FORBIDDEN,
+    error: 'This is a custom message',
+  }, HttpStatus.FORBIDDEN);
+```
+
+### 4. Configure PubSub for production early on
+
+PubSub has dependency on object serialization in memory serialization is quite different from DB backed serialization. While it is enticing to use default PubSub that NestJs offers with GraphQL, I strongly suggest configuring for production before any implementation.
+
+> Production apps should use a PubSub implementation backed by an external store
+> - NestJs documentation
+
 
