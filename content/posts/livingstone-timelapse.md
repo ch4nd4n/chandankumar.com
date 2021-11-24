@@ -1,7 +1,7 @@
 ---
 title: Timelapse Livingstone Daisy on a Nikon DSLR
-slug: /tutorial/apple-m1-fly-docker-issue
-date: 2021-11-11T19:27:52.809Z
+slug: /tutorial/timelapse-video-ffmpeg-free
+date: 2021-11-11T00:00:00Z
 tag:
     - tutorial
 ---
@@ -9,7 +9,7 @@ Livingstone Daisy Timelapse using Nikon D5000 over a period of few hours.
 
 <iframe width="100%" height="400px" src="https://www.youtube.com/embed/Yst4UvUhpxo" frameborder="0" allow="accelerometer; picture-in-picture" allowfullscreen></iframe>
 
-This Timelapse comprises of little over 700 frames at 4k pixels.
+This Timelapse comprises of little over 700 frames at 4k pixels. The good thing about ffmpeg is that it costs you nothing and does the job if you don't have some fancy requirements.
 
 ### Steps
 
