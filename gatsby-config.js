@@ -8,7 +8,7 @@ module.exports = {
     siteTitle: `Chandan Kumar`,
     siteHeadline: `Chandan Kumar - Homepage of ramblings`,
     siteUrl: `https://www.chandankumar.com`,
-    siteDescription: 'chandankumar.com is space for random ramblings, technical articles by a random engineer',
+    siteDescription: 'chandankumar.com is space for random ramblings, technical articles by a random engineer. Web application engineer with keen interest in Web application development, technologies around it. Lives in Bangalore ex-Liftoff, ex-Coreobjects',
     siteTitleAlt: `Chandan Kumar`,
   },
   plugins: [
@@ -51,7 +51,7 @@ module.exports = {
       options: {
         name: `chandan kumar`,
         short_name: `chandan-kumar`,
-        description: `Software engineer at Liftoff`,
+        description: `Web application engineer with keen interest in Web application development, technologies around it. Lives in Bangalore ex-Liftoff, ex-Coreobjects`,
         start_url: `/`,
         background_color: `#fff`,
         theme_color: `#6B46C1`,
