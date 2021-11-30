@@ -72,6 +72,12 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-disqus`,
+      options: {
+        shortname: `chandankumar`,
+      },
+    },
     // `gatsby-plugin-webpack-bundle-analyser-v2`,
   ],
 };

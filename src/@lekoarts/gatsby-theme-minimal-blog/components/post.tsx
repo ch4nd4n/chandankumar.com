@@ -5,6 +5,7 @@ import React from "react";
 import Layout from "@lekoarts/gatsby-theme-minimal-blog/src/components/layout";
 import ItemTags from "@lekoarts/gatsby-theme-minimal-blog/src/components/item-tags";
 import SEO from "@lekoarts/gatsby-theme-minimal-blog/src/components/seo";
+import { Disqus } from "gatsby-plugin-disqus";
 
 type PostProps = {
   data: {
@@ -71,6 +72,7 @@ const Post = ({ data: { post } }: PostProps) => (
     >
       <MDXRenderer>{post.body}</MDXRenderer>
     </section>
+    <Disqus />
   </Layout>
 );
 
