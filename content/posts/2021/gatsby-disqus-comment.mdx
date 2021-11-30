@@ -1,12 +1,13 @@
 ---
-title: "Gatsby adding comments"
-slug: /tutorial/nextjs-disqus-comments
+title: "Adding comments to a Gatsby Blog"
+slug: /tutorial/gatsby-disqus-comments
 date: 2021-11-30T01:00:00Z
-banner: ./tailwind-banner.png
+banner: ./gatsby-disqus.png
 tags:
   - gatsby
 ---
 
+![Gatsby Disqus tutorial](./gatsby-disqus.png)
 One key feature of a blog is to allow readers to leave comments. One of the easiest way to do this
 in Gatsby is to use [Disqus](https://disqus.com/). While one might be tempted to rollout a custom comments
 system, it's not very straight forward to just drop it in Gatsby. Requires time, effort and may be capital.
@@ -35,7 +36,7 @@ npm install --save gatsby-plugin-disqus
 Official disqus documentation suggests using additional attributes, but it wasn't working. Following worked for me.
 
 ```jsx:title=post.tsx
-  <Disqus />
+  <Disqus config={{ identifier: post.slug, title: post.title }} />
 ```
 
 Remember that the Disqus widget should be embedded in the page which renders that "blog" post. For me it was post.tsx

@@ -72,7 +72,7 @@ const Post = ({ data: { post } }: PostProps) => (
     >
       <MDXRenderer>{post.body}</MDXRenderer>
     </section>
-    <Disqus />
+    <Disqus config={{ identifier: post.slug, title: post.title }} />
   </Layout>
 );
 
