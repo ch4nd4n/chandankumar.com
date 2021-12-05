@@ -1,5 +1,5 @@
 ---
-title: 'Next.js tailwind emotion'
+title: "Next.js tailwind emotion"
 slug: /tutorial/nextjs-tailwind-emotion-setup
 date: 2021-11-24T01:00:00Z
 banner: ./tailwind-banner.png
@@ -7,6 +7,7 @@ tags:
   - nodejs
   - nextjs
 ---
+
 ![nextjs tailwind emotion tutorial](./tailwind-banner.png)
 
 Quickest way to setup Next.js with Tailwinds CSS.
@@ -34,16 +35,16 @@ To solve this issue I had to make couple of changes.
 2. comment out `mode jit` in tailwinds.config.js
 
 With above changes done, I had to
-1. delete `node_modules` and `.next` 
-2. install dependency
 
+1. delete `node_modules` and `.next`
+2. install dependency
 
 After making above two changes
 
 ```sh
 rm -rf node_modules
 rm -rf .next
-yarn 
+yarn
 yarn dev
 ```
 
@@ -71,7 +72,7 @@ index d088de6..816a535 100644
 +++ b/tailwind.config.js
 @@ -1,7 +1,7 @@
  const colors = require('tailwindcss/colors')
- 
+
  module.exports = {
 -  mode: 'jit',
 +  // mode: 'jit',
