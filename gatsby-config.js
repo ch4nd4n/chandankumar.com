@@ -1,18 +1,18 @@
 require(`dotenv`).config({
   path: `.env`,
-})
+});
 
 module.exports = {
   siteMetadata: {
-    author: '@ch4nd4n',
+    author: "@ch4nd4n",
     siteTitle: `Chandan Kumar`,
     siteHeadline: `Chandan Kumar - Homepage of ramblings`,
     siteUrl: `https://www.chandankumar.com`,
-    siteDescription: 'chandankumar.com is space for random ramblings, technical articles by a random engineer. Web application engineer with keen interest in Web application development, technologies around it. Lives in Bangalore ex-Liftoff, ex-Coreobjects',
+    siteDescription:
+      "chandankumar.com is space for random ramblings, technical articles by a random engineer. Web application engineer with keen interest in Web application development, technologies around it. Lives in Bangalore ex-Liftoff, ex-Coreobjects",
     siteTitleAlt: `Chandan Kumar`,
   },
   plugins: [
-    `gatsby-plugin-netlify-cms`,
     {
       resolve: `@lekoarts/gatsby-theme-minimal-blog`,
       options: {
@@ -74,4 +74,4 @@ module.exports = {
     `gatsby-plugin-netlify`,
     // `gatsby-plugin-webpack-bundle-analyser-v2`,
   ],
-}
+};
