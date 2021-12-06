@@ -6,10 +6,10 @@ module.exports = {
   siteMetadata: {
     author: "@ch4nd4n",
     siteTitle: `Chandan Kumar`,
-    siteHeadline: `Chandan Kumar - Homepage of ramblings`,
+    siteHeadline: `Chandan Kumar`,
     siteUrl: `https://www.chandankumar.com`,
     siteDescription:
-      "chandankumar.com is space for random ramblings, technical articles by a random engineer. Web application engineer with keen interest in Web application development, technologies around it. Lives in Bangalore ex-Liftoff, ex-Coreobjects",
+      "chandankumar.com is about technical articles, photographs, tutorials, by a Web application engineer with keen interest in Web application development, technologies around it. Lives in Bangalore ex-Liftoff, ex-Coreobjects",
     siteTitleAlt: `Chandan Kumar`,
   },
   plugins: [
@@ -51,7 +51,7 @@ module.exports = {
       options: {
         name: `chandan kumar`,
         short_name: `chandan-kumar`,
-        description: `Web application engineer with keen interest in Web application development, technologies around it. Lives in Bangalore ex-Liftoff, ex-Coreobjects`,
+        description: `chandankumar.com is about technical articles, photographs, tutorials, by a Web application engineer with keen interest in Web application development, technologies around it. Lives in Bangalore ex-Liftoff, ex-Coreobjects`,
         start_url: `/`,
         background_color: `#fff`,
         theme_color: `#6B46C1`,
