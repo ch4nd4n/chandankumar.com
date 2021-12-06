@@ -38,13 +38,7 @@ const Footer = () => {
         </span>
         Copyleft. WTH
       </div>
-      <div>
-        Theme
-        {` `}
-        by
-        {` `}
-        LekoArts
-      </div>
+      <div>Theme by LekoArts</div>
     </footer>
   );
 };
