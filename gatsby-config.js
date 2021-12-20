@@ -43,6 +43,8 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: process.env.GOOGLE_ANALYTICS_ID,
+        exclude: ["/preview/**", "/do-not-track/me/too/"],
+        enableWebVitalsTracking: true,
       },
     },
     `gatsby-plugin-sitemap`,
@@ -72,12 +74,6 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-netlify`,
-    {
-      resolve: `gatsby-plugin-disqus`,
-      options: {
-        shortname: `chandankumar`,
-      },
-    },
     // `gatsby-plugin-webpack-bundle-analyser-v2`,
   ],
 };
