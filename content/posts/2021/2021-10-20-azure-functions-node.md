@@ -1,8 +1,8 @@
 ---
-title: 'Issue with Microsoft Azure Functions connecting to CosmosDB'
+title: "Issue with Microsoft Azure Functions connecting to CosmosDB"
 slug: /article/azure-cosmos-outputdocument-binding-issue
 date: 2021-10-30T01:00:00Z
-description: 'Issue with Microsoft Azure Functions connecting to CosmosDB'
+description: "Issue with Microsoft Azure Functions connecting to CosmosDB"
 tags:
   - JavaScript
   - Azure
@@ -26,16 +26,16 @@ The issue was with generated `function.json` file, I had to snip out the followi
 So the final node looked something like
 
 ```json
-    {
-      "type": "cosmosDB",
-      "direction": "out",
-      "name": "outputDocument",
-      "databaseName": "my-database",
-      "collectionName": "my-container",
-      "createIfNotExists": false,
-      "connectionStringSetting": "CosmosDbConnectionString",
-      "partitionKey": "{id}"
-    }
+{
+  "type": "cosmosDB",
+  "direction": "out",
+  "name": "outputDocument",
+  "databaseName": "my-database",
+  "collectionName": "my-container",
+  "createIfNotExists": false,
+  "connectionStringSetting": "CosmosDbConnectionString",
+  "partitionKey": "{id}"
+}
 ```
 
 Azure should update the code generation logic or the document https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-output?tabs=javascript
