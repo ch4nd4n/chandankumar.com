@@ -1,18 +1,31 @@
 import React, { useState } from "react";
+import { Button, Textarea, Box } from "theme-ui";
 
 const AddComment = (props) => {
-  const { addComment } = props;
+  const { addComment, getComments } = props;
   const [usrcomment, setUsrcomment] = useState<string>();
   return (
     <>
-      <textarea onChange={(e) => setUsrcomment(e.currentTarget.value)} />
-      <button
-        onClick={() => {
-          addComment(usrcomment);
-        }}
-      >
-        Add Comment
-      </button>
+      <Textarea
+        sx={{ mb: 2 }}
+        value={usrcomment}
+        onChange={(e) => setUsrcomment(e.currentTarget.value)}
+      />
+      <Box sx={{ textAlign: "right" }}>
+        <Button
+          onClick={() => {
+            if (usrcomment.trim() === "") {
+              return;
+            }
+            addComment(usrcomment.trim()).then((d) => {
+              setUsrcomment("");
+              getComments();
+            });
+          }}
+        >
+          Add Comment
+        </Button>
+      </Box>
     </>
   );
 };

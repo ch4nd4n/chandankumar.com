@@ -1,9 +1,11 @@
 import React from "react";
+import { Button } from "theme-ui";
 
 const Signout = (props) => {
   const { auth, setUser } = props;
   return (
-    <button
+    <Button
+      variant="secondary"
       onClick={() =>
         auth.signOut().then(() => {
           setUser(null);
@@ -11,7 +13,7 @@ const Signout = (props) => {
       }
     >
       Logout
-    </button>
+    </Button>
   );
 };
 

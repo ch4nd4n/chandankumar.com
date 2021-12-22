@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Box, Container } from "theme-ui";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import {
   collection,
@@ -6,14 +7,16 @@ import {
   doc,
   getDocs,
   getFirestore,
+  orderBy,
   query,
+  serverTimestamp,
   setDoc,
   where,
 } from "firebase/firestore/lite";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import { firebaseConfig } from "../firebaseConfig";
-import Comment from "./comment";
+import CommentList from "./comment";
 import Login from "./login";
 import Signout from "./signout";
 import AddComment from "./add-comment";
@@ -22,6 +25,7 @@ type Comment = {
   id: string;
   slug: string;
   comment: string;
+  displayName: string;
 };
 
 export type CommentProp = {
@@ -55,7 +59,8 @@ const CommentSection = (prop: CommentProp) => {
   async function getComments() {
     const commentsCol = query(
       collection(db, "blogPosts"),
-      where("slug", "==", slug)
+      where("slug", "==", slug),
+      orderBy("timestamp")
     );
     const commentSnapshot = await getDocs(commentsCol);
     const commentList = commentSnapshot.docs.map((doc) => {
@@ -64,24 +69,38 @@ const CommentSection = (prop: CommentProp) => {
     setComments(commentList);
   }
 
-  async function addComment(comment) {
+  function addComment(comment) {
     let db = getFirestore(app);
     const newComment = doc(collection(db, "/blogPosts"));
-    setDoc(newComment, { slug, comment }, { merge: false });
+    return setDoc(
+      newComment,
+      {
+        slug,
+        comment,
+        displayName: user.displayName,
+        timestamp: serverTimestamp(),
+      },
+      { merge: false }
+    );
   }
   return (
-    <>
-      <Comment getComments={getComments} comments={comments} />
+    <Container>
+      <CommentList getComments={getComments} comments={comments} />
       {!user && <Login auth={auth} />}
       {user && (
         <>
-          <div>
+          <Box sx={{ mb: 3, mt: 3, textAlign: "right" }}>
+            <span style={{ paddingRight: "5px" }}>{user.displayName}</span>
             <Signout auth={auth} setUser={setUser} />
-          </div>
-          <AddComment user={user} addComment={addComment} />
+          </Box>
+          <AddComment
+            user={user}
+            addComment={addComment}
+            getComments={getComments}
+          />
         </>
       )}
-    </>
+    </Container>
   );
 };
 

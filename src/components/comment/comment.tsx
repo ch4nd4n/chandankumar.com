@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
+import { Box, Heading } from "theme-ui";
 
+function getDatestring(d) {
+  return new Date(d * 1000).toDateString();
+}
 const Comment = (prop) => {
   const { getComments, comments } = prop;
 
@@ -9,12 +13,22 @@ const Comment = (prop) => {
 
   return (
     <div>
-      <h3>Comments</h3>
-      <ul>
+      <Heading as="h3" sx={{ borderBottom: "1px solid", mb: 2 }}>
+        Comments
+      </Heading>
+      <div>
         {comments.map((comment) => (
-          <li key={comment.id}>{comment.comment}</li>
+          <div key={comment.id}>
+            <Box p={1} sx={{ mb: [2] }}>
+              <div>
+                <b style={{ marginRight: "5px" }}>{comment.displayName}</b>
+                {getDatestring(comment.timestamp.seconds)}
+              </div>
+              <div>{comment.comment}</div>
+            </Box>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
