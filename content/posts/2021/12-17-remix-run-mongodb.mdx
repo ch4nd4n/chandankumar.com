@@ -10,8 +10,8 @@ tags:
 
 import { Card, Text } from "theme-ui";
 
-This is a short tutorial on integrating remix.run with Mongodb using mongoose library.
-Remix is a full stack web framework. This is an intermediate level tutorial and one must know about Reactjs and MongoDB at least.
+This is a short tutorial on integrating remix.run with Mongodb using the mongoose library.
+Remix is a full-stack web framework. This is an intermediate level tutorial and one must know about Reactjs and MongoDB at least.
 
 <Card
   sx={{
@@ -46,14 +46,14 @@ npx create-remix@latest
 
 Fill out the details, I used Typescript and remix server.
 
-For this tutorial we don't need routes and styles, so knock it off.
+For this tutorial, we don't need routes and styles, so knock it off.
 
 ```bash
 rm -rf routes
 rm -rf styles
 ```
 
-Next step is to create Mongoose model to fetch todos collection from MongoDB.
+The next step is to create a Mongoose model to fetch todos collection from MongoDB.
 
 #### Mongoose Model
 
@@ -68,8 +68,8 @@ export default model;
 
 #### Update root.tsx
 
-In root.tsx we connect to mongodb using `mongoose.connect` method and use remix `loader`
-to use mongoose model to populate the data before component gets rendered on the browser.
+In `root.tsx` we connect to Mongodb using `mongoose.connect` method and use remix `loader`
+to use a mongoose model. The model populates the data before the component gets rendered on the browser.
 
 ```tsx:root.tsx
 import mongoose from "mongoose";
@@ -99,4 +99,8 @@ const TodoList = (todos: any) => {
 
 ## Next up
 
-You can visit remix.run for the elaborate documentation. I intend to explore web socket connection with Remix and I hope to bring out a tutorial for that as well.
+You can visit [remix.run](http://remix.run) for the official documentation. I intend to explore web socket connection with Remix.
+
+Similar article:
+
+1. [Remix Tutorial: Firebase Authentication](/blog/remix-firebase-authentication-tutorial)

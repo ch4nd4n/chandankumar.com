@@ -8,14 +8,33 @@ tags:
   - firebase
 ---
 
+import { Card, Text } from "theme-ui";
+
 ![Remix Firebase Authentication](./Remix-Firebase-Auth.png)
 A short video tutorial on integrating Firebase authentication
 in Remix. The integration process is quite similar to any other
 React application.
 
-> I am learning Remix and these are my notes
-> in this process. Implementing things in Remix has been breeze
+> I am learning Remix, and these are my notes
+> in this process. Implementing things in Remix has been a breeze
 > so far.
+
+<Card
+  sx={{
+    maxWidth: 512,
+  }}
+>
+  <iframe
+    width="100%"
+    height="300px"
+    src="https://www.youtube.com/embed/7rLTDrMfHnk"
+    frameborder="0"
+    allow="accelerometer; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</Card>
+
+You can read up or watch the hands-on video.
 
 Back to the subject, we got to do the following
 
@@ -24,11 +43,11 @@ Back to the subject, we got to do the following
 3. Create React Component.
 4. Integrate Firebase library.
 
-To add Firebase Auth into remix app, we start off with a
+To add Firebase Auth into Remix app, we start off with a
 React Component, called `FirebaseLogin`. We wrap Firebase
 related calls into this component.
 
-Note that this is not a pure component and you may want to
+Note that this is not a pure component, and you may want to
 refactor it further.
 
 Instead of using `SignInWithEmailAndPassword` we configure Google Authentication.
@@ -45,11 +64,10 @@ function googleLogin() {
 }
 ```
 
-Above lines of code initializes Firebase and GoogleAuthProvider.
-`signInWithPopup` method takes care of opening up the Google Sign
-in window.
+The above lines of code initialize Firebase and GoogleAuthProvider.
+`signInWithPopup` method takes care of opening up the Google Sign-in window.
 
-Final component would look something like below.
+The final component would look something like below.
 
 ```tsx:title=firebase-login.tsx
 import { initializeApp } from "firebase/app";
@@ -119,10 +137,10 @@ export default function Index() {
 
 ## Summary
 
-Devex of Remix is awesome, there are some quirks that I have run into
-but over all I love it. I am going to build a working application using
-Remix and keep posting follow ups.
+DevEx of Remix is awesome. There are some quirks that I have run into,
+but, overall I love it. I am going to build a working application using
+Remix and keep posting follow-ups.
 
 You may like the following
 
-1. [Remix Run Tutorial: Mongodb connection with Mongoose](http://localhost:8000/blog/remix-run-mongodb-tutorial)
+1. [Remix Run Tutorial: Mongodb connection with Mongoose](/blog/remix-run-mongodb-tutorial)
