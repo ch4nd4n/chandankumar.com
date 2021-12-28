@@ -1,11 +1,22 @@
 import React, { useEffect } from "react";
-import { Box, Heading } from "theme-ui";
+import { Button, Box, Heading } from "theme-ui";
 import { CommentType } from "./CommentType";
 import { deleteComment } from "./firebase-helper";
 
 function getDatestring(d) {
   return new Date(d * 1000).toDateString();
 }
+
+async function confirmDelete(comment: CommentType, getComments: any) {
+  const userConfirmationFlag = confirm(
+    "Are you sure that you want to delete the comment?"
+  );
+  if (userConfirmationFlag) {
+    await deleteComment(comment.id);
+    await getComments();
+  }
+}
+
 const Comment = (prop) => {
   const { getComments, comments, user } = prop;
 
@@ -25,19 +36,21 @@ const Comment = (prop) => {
               <div>
                 <img src={comment.authorPhoto} style={{ maxWidth: "25px" }} />
                 <b style={{ marginRight: "5px" }}>{comment.authorName}</b>
-                {getDatestring(comment.timestamp.seconds)}
+                <span style={{ marginRight: 5 }}>
+                  {getDatestring(comment.timestamp.seconds)}
+                </span>
                 {user && comment.authorId === user.uid && (
-                  <button
+                  <Button
+                    sx={{ p: 1, bg: "orangered" }}
                     onClick={async () => {
-                      await deleteComment(comment.id);
-                      await getComments();
+                      await confirmDelete(comment, getComments);
                     }}
                   >
                     Delete
-                  </button>
+                  </Button>
                 )}
               </div>
-              <div>{comment.comment}</div>
+              <p>{comment.comment}</p>
             </Box>
           </div>
         ))}

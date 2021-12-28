@@ -10,24 +10,26 @@ import {
   setDoc,
   where,
 } from "firebase/firestore/lite";
-
 import { db } from "./comment-section";
 import { CommentType } from "./CommentType";
 
 export async function createOrUpdateProfile(usr) {
   if (usr) {
     const docSnap = await getDoc(doc(db, "userProfiles", usr.uid));
-    const existingDoc = docSnap.data();
-    if (
-      !docSnap.exists() ||
-      existingDoc.displayName !== usr.displayName ||
-      existingDoc.photoURL !== usr.photoURL
-    )
+    if (!docSnap.exists())
       await setDoc(doc(db, "userProfiles", usr.uid), {
         displayName: usr.displayName,
         photoURL: usr.photoURL,
         uid: usr.uid,
       });
+  }
+}
+
+export async function updateProfile(user, displayName) {
+  const { uid, photoURL } = user;
+  const docSnap = await getDoc(doc(db, "userProfiles", uid));
+  if (docSnap.exists()) {
+    await setDoc(doc(db, "userProfiles", uid), { uid, photoURL, displayName });
   }
 }
 

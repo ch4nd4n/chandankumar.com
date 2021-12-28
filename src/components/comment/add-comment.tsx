@@ -13,10 +13,8 @@ const AddComment = (props) => {
       />
       <Box sx={{ textAlign: "right" }}>
         <Button
+          disabled={!usrcomment || usrcomment.trim() === ""}
           onClick={() => {
-            if (usrcomment.trim() === "") {
-              return;
-            }
             addComment(usrcomment.trim()).then((d) => {
               setUsrcomment("");
               getComments();

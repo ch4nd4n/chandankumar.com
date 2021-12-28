@@ -5,7 +5,7 @@ const Signout = (props) => {
   const { auth, setUser } = props;
   return (
     <Button
-      variant="secondary"
+      sx={{ fontSize: [14, 18], p: 2, bg: "orangered" }}
       onClick={() =>
         auth.signOut().then(() => {
           setUser(null);

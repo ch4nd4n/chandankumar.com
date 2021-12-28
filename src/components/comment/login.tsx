@@ -18,7 +18,7 @@ const Login = (props) => {
   return (
     <>
       {autherror && <div>{autherror}</div>}
-      <Button onClick={googleLogin}>Login with Google</Button>
+      <Button onClick={googleLogin}>Leave a comment</Button>
     </>
   );
 };

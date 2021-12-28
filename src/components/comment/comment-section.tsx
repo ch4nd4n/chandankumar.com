@@ -22,7 +22,9 @@ import {
   addComment,
   createOrUpdateProfile,
   getComments,
+  updateProfile,
 } from "./firebase-helper";
+import UpdateProfile from "./update-profile";
 
 export type CommentProp = {
   slug: string;
@@ -64,6 +66,10 @@ const CommentSection = (prop: CommentProp) => {
     return addComment(slug, user, comment);
   }
 
+  function updateUserProfile(updatedDisplayName) {
+    updateProfile(user, updatedDisplayName);
+  }
+
   return (
     <Container>
       <CommentList
@@ -75,7 +81,9 @@ const CommentSection = (prop: CommentProp) => {
       {user && (
         <>
           <Box sx={{ mb: 3, mt: 3, textAlign: "right" }}>
-            <span style={{ paddingRight: "5px" }}>{user.displayName}</span>
+            <span>
+              <UpdateProfile user={user} updateProfile={updateUserProfile} />
+            </span>
             <Signout auth={auth} setUser={setUser} />
           </Box>
           <AddComment
