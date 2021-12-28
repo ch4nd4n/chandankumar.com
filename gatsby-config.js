@@ -9,7 +9,7 @@ module.exports = {
     siteHeadline: `Chandan Kumar`,
     siteUrl: `https://www.chandankumar.com`,
     siteDescription:
-      "Personal blog by Chandan Kumar. On chandankumar.com I blog about software, host photographs and tutorials. ex-Liftoff, ex-Coreobjects",
+      "A blog by Chandan Kumar. chandankumar.com is a collection of notes, tutorials and articles on software programming, photography etc. ex-Liftoff, ex-Coreobjects",
     siteTitleAlt: `Chandan Kumar`,
   },
   plugins: [
@@ -53,7 +53,7 @@ module.exports = {
       options: {
         name: `chandan kumar`,
         short_name: `chandan-kumar`,
-        description: `Personal blog by Chandan Kumar. On chandankumar.com I blog about software, host photographs and tutorials. ex-Liftoff, ex-Coreobjects`,
+        description: `A blog by Chandan Kumar. chandankumar.com is a collection of notes, tutorials and articles on software programming, photography etc. ex-Liftoff, ex-Coreobjects`,
         start_url: `/`,
         background_color: `#fff`,
         theme_color: `#6B46C1`,
