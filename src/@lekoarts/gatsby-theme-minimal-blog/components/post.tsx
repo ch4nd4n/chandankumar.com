@@ -1,11 +1,11 @@
 /** @jsx jsx */
-import { jsx, Styled } from "theme-ui";
+import { jsx } from "theme-ui";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import React from "react";
 import Layout from "@lekoarts/gatsby-theme-minimal-blog/src/components/layout";
 import ItemTags from "@lekoarts/gatsby-theme-minimal-blog/src/components/item-tags";
 import SEO from "@lekoarts/gatsby-theme-minimal-blog/src/components/seo";
-import { Disqus } from "gatsby-plugin-disqus";
+import CommentSection from "../../../components/comment/comment-section";
 
 type PostProps = {
   data: {
@@ -42,7 +42,7 @@ const Post = ({ data: { post } }: PostProps) => (
       description={post.description ? post.description : post.excerpt}
       image={post.banner ? post.banner.childImageSharp.resize.src : undefined}
     />
-    <Styled.h2>{post.title}</Styled.h2>
+    <h2>{post.title}</h2>
     <p
       sx={{
         color: `secondary`,
@@ -71,8 +71,8 @@ const Post = ({ data: { post } }: PostProps) => (
       }}
     >
       <MDXRenderer>{post.body}</MDXRenderer>
+      <CommentSection slug={post.slug} />
     </section>
-    {/* <Disqus config={{ identifier: post.slug, title: post.title }} /> */}
   </Layout>
 );
 
