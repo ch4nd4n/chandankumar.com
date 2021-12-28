@@ -1,5 +1,6 @@
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -9,6 +10,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore/lite";
+
 import { db } from "./comment-section";
 import { CommentType } from "./CommentType";
 
@@ -43,6 +45,10 @@ export function addComment(slug, user, comment) {
   );
 }
 
+export function deleteComment(commentId) {
+  return deleteDoc(doc(db, "blogComments", commentId));
+}
+
 async function getUserProfiles(ids: string[]) {
   const userProfiles = collection(db, "userProfiles");
   const q = query(userProfiles, where("uid", "in", ids));
@@ -60,15 +66,23 @@ export async function getComments(slug) {
     where("slug", "==", slug),
     orderBy("timestamp")
   );
-  const commentList = (await getDocs(commentsCol)).docs.map((doc) => {
+  const commentsSnap = await getDocs(commentsCol);
+  if (commentsSnap.empty) {
+    return [];
+  }
+  const commentList = commentsSnap.docs.map((doc) => {
     return { ...doc.data(), id: doc.id };
   }) as CommentType[];
   if (!commentList.length) return [];
   const profileIds = commentList.map((comment) => comment.authorId);
   const userMap = await getUserProfiles(profileIds);
   commentList.forEach((value) => {
-    value.authorName = userMap[value.authorId].displayName;
-    value.authorPhoto = userMap[value.authorId].photoURL;
+    value.authorName = userMap[value.authorId]
+      ? userMap[value.authorId].displayName
+      : "UNKNOWN";
+    value.authorPhoto = userMap[value.authorId]
+      ? userMap[value.authorId].photoURL
+      : null;
   });
 
   return commentList;

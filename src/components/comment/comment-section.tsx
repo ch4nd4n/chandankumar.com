@@ -66,7 +66,11 @@ const CommentSection = (prop: CommentProp) => {
 
   return (
     <Container>
-      <CommentList getComments={fetchComments} comments={comments} />
+      <CommentList
+        getComments={fetchComments}
+        comments={comments}
+        user={user}
+      />
       {!user && <Login auth={auth} />}
       {user && (
         <>
