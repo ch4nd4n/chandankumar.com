@@ -13,6 +13,11 @@ import {
 import { db } from "./comment-section";
 import { CommentType } from "./CommentType";
 
+/**
+ * Adds user to firestore "userProfiles" collection. In this case
+ * its Firebase Authenticated user
+ * @param usr Firebase user object
+ */
 export async function createOrUpdateProfile(usr) {
   if (usr) {
     const docSnap = await getDoc(doc(db, "userProfiles", usr.uid));
@@ -25,6 +30,11 @@ export async function createOrUpdateProfile(usr) {
   }
 }
 
+/**
+ * Update user Profile
+ * @param user authenticated user
+ * @param displayName display name to be set
+ */
 export async function updateProfile(user, displayName) {
   const { uid, photoURL } = user;
   const docSnap = await getDoc(doc(db, "userProfiles", uid));
@@ -46,7 +56,7 @@ export function addComment(slug, user, comment) {
     { merge: false }
   );
 }
-
+// ACL is taken care by Firebase Rules
 export function deleteComment(commentId) {
   return deleteDoc(doc(db, "blogComments", commentId));
 }

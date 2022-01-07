@@ -11,9 +11,191 @@ tags:
 
 import { Card, Text } from "theme-ui";
 
-This article covers Firebase integration in a React/Reactjs application. It uses
-Firestore to build comments system for a Gatsby blog and will cover
-the following
+Tutorial on integrating firebase on client side, particularly Firestore.
+I built a comment system for Gatsby Blog powered by
+Firebase/Firestore. I am using for Gatsby, although it can be tweaked
+for any other React application like nextjs or Remix.
+
+Walkthrough video of final implementation
+
+<Card
+  sx={{
+    maxWidth: 512,
+  }}
+>
+  <iframe
+    width="100%"
+    height="300px"
+    src="https://www.youtube.com/embed/8zM9zvQ28c4"
+    frameborder="0"
+    allow="accelerometer; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</Card>
+
+Firebase Comment is integrated with this blog and if you would like
+to see it in action, before reading through, check out the [comments](#comments)
+
+Down below you can find previous video on hands-on coding.
+
+Source Code: https://github.com/ch4nd4n/chandankumar.com/tree/master/src/components/comment
+
+#### Quick recap
+
+- Use Firebase authentication to authenticate and authorize the users to comment on the blog
+- Use Firestore to persist blog comments
+- Use Firebase Emulator to have end to end development setup locally
+  - so that we don't have to invoke production firebase.
+  - This makes development a tick faster as it cuts down external network requests.
+  - Not worried about messing up the production data.
+  - Firebase emulator makes it easier to develop and test out the implementation.
+
+Grunt of the work to interact with Firebase is done in `firebase-helper.ts`
+It has a method to add comment, fetch comments, login user using google
+authentication, delete a comment and update user profile.
+
+ACL is taken care by Firestore rules. A logged in user can comment and
+view everyone's comment but can't edit other person's comment or delete it.
+A quick example is something like
+
+`allow delete: if resource.data.authorId == request.auth.uid;`
+
+Logic to add comment is quite straight forward
+
+```ts:title=firebase-helper.ts
+export function addComment(slug, user, comment) {
+  const newComment = doc(collection(db, "blogComments"));
+  return setDoc(
+    newComment,
+    {
+      slug,
+      comment,
+      authorId: user.uid,
+      timestamp: serverTimestamp(),
+    },
+    { merge: false }
+  );
+}
+
+// ACL is taken care by Firebase Rules
+export function deleteComment(commentId) {
+  return deleteDoc(doc(db, "blogComments", commentId));
+}
+```
+
+To get comments(`getComments`) from firestore, we query the collection for specific
+slug and then we populate author detail. I have kept the model very simple
+and haven't nested it.
+
+Logic to update logged in user profile(`updateProfile`) is straight forward as well.
+Use `setDoc` to update `userProfiles` for given userid, `uid` is what firebase
+authentication gives.
+
+`setDoc(doc(db, "userProfiles", uid), { uid, photoURL, displayName })`
+
+```ts:title=firebase-helper.ts
+export async function getComments(slug) {
+  const commentsCol = query(
+    collection(db, "blogComments"),
+    where("slug", "==", slug),
+    orderBy("timestamp")
+  );
+  const commentsSnap = await getDocs(commentsCol);
+  if (commentsSnap.empty) {
+    return [];
+  }
+  const commentList = commentsSnap.docs.map((doc) => {
+    return { ...doc.data(), id: doc.id };
+  }) as CommentType[];
+  if (!commentList.length) return [];
+  const profileIds = commentList.map((comment) => comment.authorId);
+  const userMap = await getUserProfiles(profileIds);
+  commentList.forEach((value) => {
+    value.authorName = userMap[value.authorId]
+      ? userMap[value.authorId].displayName
+      : "UNKNOWN";
+    value.authorPhoto = userMap[value.authorId]
+      ? userMap[value.authorId].photoURL
+      : null;
+  });
+
+  return commentList;
+}
+
+async function getUserProfiles(ids: string[]) {
+  const userProfiles = collection(db, "userProfiles");
+  const q = query(userProfiles, where("uid", "in", ids));
+  const reducer = (prev, cur) => {
+    prev[cur.uid] = cur;
+    return prev;
+  };
+  const userList = (await getDocs(q)).docs.map((user) => user.data());
+  return userList.reduce(reducer, {});
+}
+
+export async function updateProfile(user, displayName) {
+  const { uid, photoURL } = user;
+  const docSnap = await getDoc(doc(db, "userProfiles", uid));
+  if (docSnap.exists()) {
+    await setDoc(doc(db, "userProfiles", uid), { uid, photoURL, displayName });
+  }
+}
+```
+
+Refer to `firestore.rules` that I am using for local development
+
+```firestore.rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    match /blogComments/{multiSegment=**} {
+        allow read;
+        allow create: if request.auth != null;
+        allow delete: if resource.data.authorId == request.auth.uid;
+    }
+    match /userProfiles/{multiSegment=**} {
+        allow read;
+        allow create: if request.auth != null;
+        allow update: if request.auth.uid == resource.data.uid;
+    }
+  }
+}
+```
+
+#### Local Emulator Setup
+
+Setup Emulator: Firebase emulator makes development easy. It's one time effort setting it up.
+
+```
+npm install -g firebase-tools
+```
+
+Choose a folder where you would want to initialize firebase emulator.
+This process would create emulator related files, so be wary of where
+you init the emulator. When you initialize the emulator, do remember to
+enable firestore and authentication.
+
+```
+firebase init emulators
+```
+
+start the emulator
+
+If you don't care about persisting emualtor data between restart
+
+```bash
+firebase emulators:start
+```
+
+or if you want to persist the data use the below
+
+```bash
+firebase emulators:start --import=./.emulator-data --export-on-exit
+```
+
+## Earlier post
 
 1. React Firestore(Firebase) integration
 2. React Firebase Authentication integration
@@ -36,18 +218,11 @@ the following
 
 ## Getting started
 
-This tutorial is an updated version of a previous tutorial.
-In this part, we will build a complete solution to add comments
-to a Gatsby blog.
-
 There are solutions like Disqus, which I have written about in the past,
 but I did not realize at the time that it comes with its issues of
 targetted ads, user tracking et al.
 
-Source change at https://github.com/ch4nd4n/chandankumar.com/commit/fc4b00f4ab5c2daf88d45a6d7d2bd67324e8ee32
-will be handy to get an idea of final source code.
-
-To summarize, I am wrapping comments functionality in a React component
+I am wrapping comments functionality in a React component
 `CommentSection` which has 3 sub-components. Oh, and before I forget
 I highly recommend using Firebase Emulator instead of using
 production Firebase.
@@ -56,10 +231,8 @@ production Firebase.
 2. Login/Authentication (and logout)
 3. Add comment
 
-![React Component Design](./gatsby-firebase-auth.png)
-
 A grunt of the logic is in `CommentSection`, and the rest of the
-components are more or less dumb components.
+components are more or less pure components.
 
 So we begin with getting a reference to Firestore and initialize firebase with the necessary configuration.
 

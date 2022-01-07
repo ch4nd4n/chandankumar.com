@@ -13,7 +13,7 @@ import {
 } from "firebase/auth";
 
 import { firebaseConfig } from "../firebaseConfig";
-import CommentList from "./comment";
+import CommentList from "./comment-list";
 import Login from "./login";
 import Signout from "./signout";
 import AddComment from "./add-comment";

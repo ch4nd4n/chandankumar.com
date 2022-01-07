@@ -71,6 +71,7 @@ const Post = ({ data: { post } }: PostProps) => (
       }}
     >
       <MDXRenderer>{post.body}</MDXRenderer>
+      <div id="comments"></div>
       <CommentSection slug={post.slug} />
     </section>
   </Layout>
