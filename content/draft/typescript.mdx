@@ -1,4 +1,17 @@
-Compiling and executing
+A brief guide on setting up Typescript, eslint and prettier
+with node.js
+
+TLDR; Use eslint to lint source over tsconfig or prettier.
+
+## How to configure Typescript(node) project
+
+1. Install Typescript, eslint and prettier dependency
+2. Generate relevant config files
+3. Update package.json with relevant scripts.
+
+## Installing dependency
+
+Add typescripts as dev dependency
 
 ```bash
 yarn init -y
@@ -6,18 +19,33 @@ yarn add typescript --dev
 ls node_modules/.bin
 ```
 
-Update package.json
+Update `package.json`
 
-```
+```json
 "scripts": {
     "tsc": "tsc"
   },
 ```
 
-```sh
+Add Typescript source in `src` folder
+
+```bash
 mkdir src
 touch src/index.ts
-yarn tsc src/_.ts or npx tsc src/_.ts
+```
+
+Add relevant content to index.ts (or your entire code base)
+
+```ts:title=src/index.ts
+function getMessage() {
+  return "hello world";
+}
+```
+
+Use `tsc` to compile ts to js and run it.
+
+```bash
+yarn tsc src/*.ts or npx tsc src/*.ts
 node src/index.js
 ```
 
@@ -61,6 +89,7 @@ https://eslint.org/docs/user-guide/getting-started
 
 ```sh
 yarn add -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+yarn create @eslint/config # npm init @eslint/config
 ```
 
 ```
@@ -101,18 +130,18 @@ Checking formatting...
 
 You could fix above using something like
 
-```
+```bash
 yarn prettier --write .
 git diff
 ```
 
 Although if you do a linting, you would see an error
 
-```
+```bash
 yarn lint
 ```
 
-```lint
+```log
 2:13  error  Strings must use singlequote  quotes
 ```
 
