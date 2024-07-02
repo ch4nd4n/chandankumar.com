@@ -1,0 +1,51 @@
+---
+title: "SQLite Primer"
+date: "2023-03-01"
+description: "A quick primer on SQLite, a lightweight and easy-to-use relational database management system (RDBMS)."
+---
+
+SQLite is a lightweight RDBMS. It's dead simple to use and has a small footprint. I am using it in production and it's been good so far.
+
+## Install
+
+Depends on your OS. For example, on Ubuntu: `sudo apt-get install sqlite3` or on MacOS: `brew install sqlite3`
+
+Figure out how to install it on your OS. You can also use the [SQLite CLI](https://www.sqlite.org/cli.html) to interact with the database.
+
+Notes on using SQLite CLI 
+
+### 1. Create or Open a Database
+
+```bash
+sqlite3 mydatabase.db
+```
+
+### 2. Create a Table
+
+
+#### Command to Create Table `user`
+```sql
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    email TEXT UNIQUE
+);
+```
+
+### Steps
+
+1. **Open SQLite CLI**:
+   ```sh
+   sqlite3 mydatabase.db
+   ```
+
+2. **Execute the Create Table Command**:
+   ```sql
+   CREATE TABLE user (
+       id INTEGER PRIMARY KEY,
+       name TEXT,
+       email TEXT UNIQUE
+   );
+   ```
+
+This command creates a table named `user` with columns `id`, `name`, and `email` (with `email` being unique).

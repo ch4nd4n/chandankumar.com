@@ -32,6 +32,15 @@ allows us to use connection pool for a faster data pull from
 MongoDB. This can be used effectively if you are using something
 like Remix default server or Express Adapter.
 
+To install Typegoose
+
+```sh
+yarn add @typegoose/typegoose # install typegoose itself
+yarn add mongoose # install peer-dependency mongoose
+```
+
+Establish connection with Mongodb in `entry.server.tsx`
+
 ```tsx:title=entry.server.tsx
 // Establish MongoDB connection once server boots up
 connect(process.env.MONGODB_URL as string)
@@ -67,9 +76,10 @@ import { mongoose, prop } from "@typegoose/typegoose";
  */
 export default class MenuItem {
   _id?: mongoose.Types.ObjectId;
-  @prop({ type: () => String })
+  @prop()
   public name!: string;
 
+  // type is optional here
   @prop({ type: Number })
   public price?: number;
 }
