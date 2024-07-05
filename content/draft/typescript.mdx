@@ -1,7 +1,13 @@
 A brief guide on setting up Typescript, eslint and prettier
-with node.js
+with `node.js`. Treat this as a guide which describes how to
+setup typescript from the scratch. The intent isn't to
+give introduction to TypeScript but how to set it up. Of course
+there are automated way of setting up Typescript, but this will
+elaborate on what goes behind the scene.
 
 TLDR; Use eslint to lint source over tsconfig or prettier.
+
+> For this guide I am using `yarn` but feel free to use `npm` or whatever else.
 
 ## How to configure Typescript(node) project
 
@@ -19,13 +25,19 @@ yarn add typescript --dev
 ls node_modules/.bin
 ```
 
-Update `package.json`
+At this point of time you are all set to start using typescript.
+Although, to make things a bit more convinient, we would configure
+few things that allows you to compile TS to JS.
+
+Update `package.json` and add the following to it.
 
 ```json
 "scripts": {
     "tsc": "tsc"
   },
 ```
+
+Above allows us to do something like `yarn tsc`.
 
 Add Typescript source in `src` folder
 
@@ -86,9 +98,10 @@ yarn start
 #### Add linter
 
 https://eslint.org/docs/user-guide/getting-started
+https://typescript-eslint.io/
 
 ```sh
-yarn add -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+yarn add --dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript
 yarn create @eslint/config # npm init @eslint/config
 ```
 
