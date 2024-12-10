@@ -8,9 +8,9 @@ tags: ["database migration", "prisma", "cockroachdb", "postgresql"]
 
 ### Migrating Data from CockroachDB to PostgreSQL
 
-Migrating databases can seem like a daunting task, but with tools like Prisma, the process can be streamlined and efficient. In this guide, we’ll explore how to migrate data from **CockroachDB** to **PostgreSQL** using Prisma and custom scripts.
+Had to migrate database recently, we’ll explore how to migrate data from **CockroachDB** to **PostgreSQL** using Prisma and custom scripts.
 
----
+This is one of different kind of issue that I worked on recently, While I can't share the entire source, I have abstracted pieces and put in here.
 
 ### Step 1: Export Data from CockroachDB
 
@@ -20,6 +20,47 @@ Run the script with the appropriate database URL:
 
 ```bash
 DB_URL="postgres://user:<hidden-password>@HOST_COCKROACH/database" ./docker/export-data.sh
+```
+
+```bash:title=export-data.sh
+#!/bin/bash
+
+# Ensure DB_URL is set
+if [[ -z "$DB_URL" ]]; then
+  echo "Error: DB_URL environment variable is not set."
+  exit 1
+fi
+
+# Path to the tables list file
+TABLES_FILE="./tables.txt"
+
+# Check if the tables file exists
+if [[ ! -f "$TABLES_FILE" ]]; then
+  echo "Error: Tables list file (${TABLES_FILE}) not found."
+  exit 1
+fi
+
+# Directory to store the CSV files
+EXPORT_DIR="./data/"
+mkdir -p "$EXPORT_DIR"
+
+# Loop through tables and export them
+while IFS= read -r table; do
+  CSV_FILE="${EXPORT_DIR}/${table}.csv"
+
+  echo "Exporting ${table} to ${CSV_FILE}..."
+  psql "$DB_URL" <<EOF
+\COPY ${table} TO '${CSV_FILE}' WITH CSV HEADER DELIMITER ',';
+EOF
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to export ${table}. Continuing with next table..."
+    continue
+  fi
+  echo "${table} exported successfully."
+done < "$TABLES_FILE"
+
+echo "All tables exported."
+
 ```
 
 This script exports data for all specified tables into CSV files, ready to be imported into the new database.
@@ -59,6 +100,43 @@ DB_URL="postgres://user:<hidden-password>@localhost/dev" ./docker/import-data.sh
 ```
 
 The script maps the data in the CSV files to their corresponding tables in the PostgreSQL database.
+
+```bash:title=import-data.sh
+# Ensure DB_URL is set
+if [[ -z "$DB_URL" ]]; then
+  echo "Error: DB_URL environment variable is not set."
+  exit 1
+fi
+
+# Path to the tables list file
+TABLES_FILE="./tables.txt"
+
+# Check if the tables file exists
+if [[ ! -f "$TABLES_FILE" ]]; then
+  echo "Error: Tables list file (${TABLES_FILE}) not found."
+  exit 1
+fi
+
+# Directory containing the CSV files
+CSV_DIR="./data"
+
+# Read tables from the file and import them
+while IFS= read -r table; do
+  CSV_FILE="${CSV_DIR}/${table}.csv"
+  echo "Importing ${table} from ${CSV_FILE}..."
+  psql "$DB_URL" <<EOF
+\COPY ${table} FROM '${CSV_FILE}' WITH CSV HEADER DELIMITER ',';
+EOF
+
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to import ${table}."
+  else
+    echo "${table} imported successfully."
+  fi
+done < "$TABLES_FILE"
+
+echo "All tables imported."
+```
 
 ---
 
@@ -103,8 +181,6 @@ Prisma simplifies database migrations in several ways:
 
 ---
 
-### Conclusion
+If you have to just migrate data from one database to another, dumping and importing data using CSV files is a straightforward approach. However, if you need to migrate more complex data structures or handle more complex relationships, Prisma can help simplify the process.
 
-Migrating data from CockroachDB to PostgreSQL can be made straightforward with the right tools and approach. By combining Prisma’s schema tools with custom export/import scripts and using Docker Compose for local testing, you can ensure a smooth migration process.
-
-Do you have any tips for managing database migrations? Share your thoughts in the comments!
+> Note: Parts of this note is Generated using LLMs, so it might not be 100% accurate.
