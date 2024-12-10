@@ -22,6 +22,17 @@ Run the script with the appropriate database URL:
 DB_URL="postgres://user:<hidden-password>@HOST_COCKROACH/database" ./docker/export-data.sh
 ```
 
+I used the following `tables.txt` file to list the tables to export, started off initially with putting all tables in the file but the script was getting littered with table names. More over could reused the same file for other scripts.
+
+```text:title=tables.txt
+accounts
+users
+foo
+bar
+```
+
+Refer to the following `export-data.sh` script for the full implementation. This script exports data for all specified tables into CSV files, ready to be imported into the new database.
+
 ```bash:title=export-data.sh
 #!/bin/bash
 
@@ -62,8 +73,6 @@ done < "$TABLES_FILE"
 echo "All tables exported."
 
 ```
-
-This script exports data for all specified tables into CSV files, ready to be imported into the new database.
 
 ---
 
